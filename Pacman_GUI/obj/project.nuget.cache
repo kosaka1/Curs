@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "HlKZIfLmMeapcj585PkJ8kKPkwyxYK03CDls6eTRlFFBHho3u/D5+LZjXtBknE7YwkZwSJH0MF3sNOqTCykEVw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Happy\\source\\repos\\Curs\\Pacman_GUI\\Pacman_GUI.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Happy\\.nuget\\packages\\microsoft.win32.systemevents\\7.0.0\\microsoft.win32.systemevents.7.0.0.nupkg.sha512",
+    "C:\\Users\\Happy\\.nuget\\packages\\system.drawing.common\\7.0.0\\system.drawing.common.7.0.0.nupkg.sha512",
+    "C:\\Users\\Happy\\.nuget\\packages\\system.windows.extensions\\7.0.0\\system.windows.extensions.7.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

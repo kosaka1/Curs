@@ -1,0 +1,6 @@
+W - move up
+A - move left
+D - move right
+S - move down
+M - return to menu
+Spacebar - pause
