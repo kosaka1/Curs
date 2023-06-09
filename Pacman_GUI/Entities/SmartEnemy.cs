@@ -1,5 +1,5 @@
 ﻿
-namespace Cursovoi
+namespace Course
 {
     internal class SmartEnemy : Enemy
     {
@@ -50,7 +50,6 @@ namespace Cursovoi
                     {
                         if (coordinates.x - 1 >= 0 && coordinates.y - 1 >= 0 &&
                             coordinates.x + 1 < width && coordinates.y + 1 < height &&
-                            WavesMap[coordinates.x + Delta[i].x, coordinates.y + Delta[i].y] != -2 &&
                             WavesMap[coordinates.x + Delta[i].x, coordinates.y + Delta[i].y] == -1)
                         {
                             WavesMap[coordinates.x + Delta[i].x, coordinates.y + Delta[i].y] = step + 1;
