@@ -1,5 +1,5 @@
 ﻿
-namespace Cursovoi
+namespace Course
 {
     internal class Obslacle : Element // клас на наслідуваня перешкод
     {

@@ -1,4 +1,4 @@
-﻿namespace Cursovoi
+﻿namespace Course
 {
     internal class Coin : Bonus // монетка, яка додає очки і є обов'язковою для проходження рівня
     {

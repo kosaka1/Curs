@@ -1,5 +1,5 @@
 ﻿
-namespace Cursovoi
+namespace Course
 {
     internal class NaiveEnemy : Enemy // привид, який рухається у тій області що й Пекмен
     {

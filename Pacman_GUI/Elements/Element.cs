@@ -1,5 +1,5 @@
 ﻿
-namespace Cursovoi
+namespace Course
 {
     public abstract class Element // клас від якого наслідуються всі елементи карти
     {

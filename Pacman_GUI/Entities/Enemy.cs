@@ -1,5 +1,5 @@
 ﻿
-namespace Cursovoi
+namespace Course
 {
     internal class Enemy : Entity // привид, який рухається випадково
     {

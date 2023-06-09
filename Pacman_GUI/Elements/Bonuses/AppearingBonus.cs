@@ -1,5 +1,5 @@
 ﻿
-namespace Cursovoi
+namespace Course
 {
     internal class AppearingBonus   // клас для бонусу який буде з'являтися у випадковому місці у бонусному рівні
     {

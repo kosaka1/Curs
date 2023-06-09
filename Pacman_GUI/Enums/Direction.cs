@@ -1,4 +1,4 @@
-﻿namespace Cursovoi 
+﻿namespace Course 
 {
     enum Direction
     {

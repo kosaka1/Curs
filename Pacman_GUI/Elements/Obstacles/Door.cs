@@ -1,5 +1,5 @@
 ﻿
-namespace Cursovoi
+namespace Course
 {
     internal class Door : Obslacle // двері, відчиняються відмичкою
     {

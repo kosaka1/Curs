@@ -1,5 +1,5 @@
 ﻿
-namespace Cursovoi
+namespace Course
 {
     internal class Dollar : Bonus // Додає ігрову валюту при зборі
     {

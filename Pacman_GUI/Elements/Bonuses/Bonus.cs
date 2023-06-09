@@ -1,4 +1,4 @@
-﻿namespace Cursovoi
+﻿namespace Course
 {
     internal abstract class Bonus : Element  // абстрактний клас для, який будуть наслідувати бонуси
     {

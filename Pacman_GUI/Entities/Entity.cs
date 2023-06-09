@@ -1,5 +1,5 @@
 ﻿
-namespace Cursovoi
+namespace Course
 {
     internal abstract class Entity : Element // сутність, наслідують всі рухомі елементи
     {

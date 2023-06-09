@@ -1,5 +1,5 @@
 ﻿
-namespace Cursovoi
+namespace Course
 {
     internal class Web : Bonus //павутина, записняє Пекмена
     {

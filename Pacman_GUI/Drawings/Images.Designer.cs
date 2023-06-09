@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cursovoi {
+namespace Course {
     using System;
     
     

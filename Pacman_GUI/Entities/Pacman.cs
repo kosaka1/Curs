@@ -1,6 +1,6 @@
 ﻿
 
-namespace Cursovoi
+namespace Course
 {
     internal class Pacman : Entity // Пекмен, управляється гравцем, може збирати елементи на карті. 
     {

@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace Cursovoi
+namespace Course
 {
     internal class Energizer : Bonus // енерджайзер, який при зборі переводить привидів у стан переляку. 
     {

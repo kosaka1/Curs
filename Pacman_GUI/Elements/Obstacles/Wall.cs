@@ -1,5 +1,5 @@
 ﻿
-namespace Cursovoi
+namespace Course
 {
     internal class Wall : Obslacle // стіна, є непрохідною
     {

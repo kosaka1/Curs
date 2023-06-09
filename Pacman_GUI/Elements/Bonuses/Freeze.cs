@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 
 
-namespace Cursovoi
+namespace Course
 {
     internal class Freeze : Bonus //заморожуваня, зупиняє привидів
     {
