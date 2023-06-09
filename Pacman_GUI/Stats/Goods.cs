@@ -1,5 +1,5 @@
 ﻿
-namespace Cursovoi
+namespace Course
 {
     internal abstract class Goods // Клас для наслідування товарів у магазині
     {

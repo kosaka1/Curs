@@ -1,7 +1,7 @@
 ﻿using System.Media;
 
 
-namespace Cursovoi
+namespace Course
 {
     internal class MapCreator // редактор карт
     {
@@ -172,7 +172,7 @@ namespace Cursovoi
             int doors = Width * Height / 200 + 1;
             int webs = Width * Height / 50 + 1;
             int freezes = Width * Height / 100 + 1;
-            MazeGenerator generator = new MazeGenerator(Width - 1, Height - 1, 1, 0, Width, Height, this);
+            MazeGenerator generator = new MazeGenerator(Width - 1, Height - 1, 1, 1, Width, Height, this);
             bool[,] maze = generator.CreateMaze();
             X = 1;
             Y = 1;

@@ -1,5 +1,5 @@
 ﻿
-namespace Cursovoi
+namespace Course
 {
     enum CellStatus
     {

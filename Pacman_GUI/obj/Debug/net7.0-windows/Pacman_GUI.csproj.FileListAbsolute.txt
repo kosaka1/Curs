@@ -60,8 +60,6 @@ C:\Users\Happy\source\repos\Curs\Pacman_GUI\bin\Debug\net7.0-windows\Pacman_GUI.
 C:\Users\Happy\source\repos\Curs\Pacman_GUI\bin\Debug\net7.0-windows\Pacman_GUI.pdb
 C:\Users\Happy\source\repos\Curs\Pacman_GUI\obj\Debug\net7.0-windows\Pacman_GUI.csproj.AssemblyReference.cache
 C:\Users\Happy\source\repos\Curs\Pacman_GUI\obj\Debug\net7.0-windows\Pacman_GUI.Drawings.Images.resources
-C:\Users\Happy\source\repos\Curs\Pacman_GUI\obj\Debug\net7.0-windows\Cursovoi.PlayPacmanForm.resources
-C:\Users\Happy\source\repos\Curs\Pacman_GUI\obj\Debug\net7.0-windows\Cursovoi.CreatingMap.resources
 C:\Users\Happy\source\repos\Curs\Pacman_GUI\obj\Debug\net7.0-windows\Pacman_GUI.csproj.GenerateResource.cache
 C:\Users\Happy\source\repos\Curs\Pacman_GUI\obj\Debug\net7.0-windows\Pacman_GUI.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Happy\source\repos\Curs\Pacman_GUI\obj\Debug\net7.0-windows\Pacman_GUI.AssemblyInfoInputs.cache
@@ -72,3 +70,5 @@ C:\Users\Happy\source\repos\Curs\Pacman_GUI\obj\Debug\net7.0-windows\refint\Pacm
 C:\Users\Happy\source\repos\Curs\Pacman_GUI\obj\Debug\net7.0-windows\Pacman_GUI.pdb
 C:\Users\Happy\source\repos\Curs\Pacman_GUI\obj\Debug\net7.0-windows\Pacman_GUI.genruntimeconfig.cache
 C:\Users\Happy\source\repos\Curs\Pacman_GUI\obj\Debug\net7.0-windows\ref\Pacman_GUI.dll
+C:\Users\Happy\source\repos\Curs\Pacman_GUI\obj\Debug\net7.0-windows\Course.PlayPacmanForm.resources
+C:\Users\Happy\source\repos\Curs\Pacman_GUI\obj\Debug\net7.0-windows\Course.CreatingMap.resources

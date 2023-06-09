@@ -1,5 +1,5 @@
 ﻿
-namespace Cursovoi
+namespace Course
 {
     internal class Map // у цьому класі зберігається карта
     {

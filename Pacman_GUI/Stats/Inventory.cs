@@ -1,5 +1,5 @@
 ﻿
-namespace Cursovoi
+namespace Course
 {
     internal class Inventory // Інвентар, має фіксований розмір
     {

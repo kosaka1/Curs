@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Cursovoi
+namespace Course
 {
     public partial class CreatingMap : Form
     {
@@ -13,21 +13,29 @@ namespace Cursovoi
         private PictureBox pointer;
         private PictureBox[] tools;
 
-
         public CreatingMap()
         {
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint, true);
             UpdateStyles();
             InitializeComponent();
+            sizeOfSides = PlayPacmanForm.sizeOfSides;
 
+            SetPointer();
+            SetSelectedCell();
+        }
+
+        private void SetPointer()
+        {
             pointer = new PictureBox();
             pointer.Size = new Size(20, 20);
             pointer.SizeMode = PictureBoxSizeMode.Zoom;
             pointer.Image = Images.Pointer;
             pointer.Visible = false;
             Controls.Add(pointer);
+        }
 
-            sizeOfSides = PlayPacmanForm.sizeOfSides;
+        private void SetSelectedCell()
+        {
             selectedCell = new PictureBox();
             selectedCell.Size = new Size(sizeOfSides, sizeOfSides);
             selectedCell.SizeMode = PictureBoxSizeMode.Zoom;
@@ -127,23 +135,8 @@ namespace Cursovoi
 
             mapInfo.Visible = false;
             selectedCell.Visible = true;
-            helpInfo = new Label();
-            helpInfo.Text = "H -- help info";
-            helpInfo.AutoSize = true;
-            helpInfo.Location = new Point(0, creator.Height * sizeOfSides + 1);
-            Controls.Add(helpInfo);
-
-            this.width = new Label();
-            this.width.Text = $"Width {creator.Width}";
-            this.width.AutoSize = true;
-            this.width.Location = new Point(0, helpInfo.Bottom);
-            Controls.Add(this.width);
-
-            this.height = new Label();
-            this.height.Text = $"Height {creator.Height}";
-            this.height.AutoSize = true;
-            this.height.Location = new Point(0, this.width.Bottom);
-            Controls.Add(this.height);
+            SetHelpInfo();
+            SetSizes();
 
             pointer.Location = new Point(0, this.height.Bottom + sizeOfSides);
             pointer.Visible = true;
@@ -157,12 +150,36 @@ namespace Cursovoi
                 {
                     creator.CreateRandomMap();
                     KeyDown += CreatingMap_KeyDown;
-                }); ;
+                }); 
             }
             else
             {
                 KeyDown += CreatingMap_KeyDown;
             }
+        }
+
+        private void SetHelpInfo()
+        {
+            helpInfo = new Label();
+            helpInfo.Text = "H -- help info";
+            helpInfo.AutoSize = true;
+            helpInfo.Location = new Point(0, creator.Height * sizeOfSides + 1);
+            Controls.Add(helpInfo);
+        }
+
+        private void SetSizes()
+        {
+            width = new Label();
+            width.Text = $"Width {creator.Width}";
+            width.AutoSize = true;
+            width.Location = new Point(0, helpInfo.Bottom);
+            Controls.Add(width);
+
+            height = new Label();
+            height.Text = $"Height {creator.Height}";
+            height.AutoSize = true;
+            height.Location = new Point(0, width.Bottom);
+            Controls.Add(height);
         }
 
         private void CreatingMap_KeyDown(object sender, KeyEventArgs e)
@@ -174,7 +191,7 @@ namespace Cursovoi
                     Refresh();
                     break;
                 case Keys.H:
-                    MessageBox.Show("Create a map!" + "\n  E -- put the element" + "\n  spacebar --   - space" + "\n  V -- @ - pacman (only one)" + "\n  1 -- # - wall" + "\n  2 -- . - coin " + "\n  3 -- A - ghost" + "\n  4 -- O - energizer" + "\n  5 -- * - web" + "\n  6 -- % - freeze" + "\n  7 -- & - picklock" + "\n  8 -- | - door" + "\n  Enter -- cancel editing");
+                    MessageBox.Show("Create a map!" + "\n  E -- put the element" + "\n  spacebar -- space" + "\n  V -- pacman (only one)" + "\n  1 -- wall" + "\n  2 -- coin " + "\n  3 -- ghost" + "\n  4 -- energizer" + "\n  5 -- web" + "\n  6 -- freeze" + "\n  7 -- picklock" + "\n  8 -- door" + "\n  Enter -- cancel editing");
                     break;
                 case Keys.M:
                     changesizes.Location = new Point(Width / 2, Height / 2);
@@ -183,10 +200,7 @@ namespace Cursovoi
                     break;
                 case Keys.Y:
                     timer.Enabled = true;
-                    Task.Run(() =>
-                    {
-                        creator.CreateRandomMap();
-                    });
+                    Task.Run(creator.CreateRandomMap);
                     break;
             }
 
@@ -200,7 +214,8 @@ namespace Cursovoi
                 if (!creator.IsPass)
                 {
 
-                    if (MessageBox.Show("Your Level is cannot be completed. Continue?", "Saving map", buttons: MessageBoxButtons.YesNo) == DialogResult.No)
+                    if (MessageBox.Show("Your Level is cannot be completed. Continue?", "Saving map", buttons: MessageBoxButtons.YesNo)
+                        == DialogResult.No)
                     {
                         Refresh();
                         DrawTools();

@@ -1,6 +1,6 @@
 
 
-namespace Cursovoi
+namespace Course
 {
     internal static class Program
     {

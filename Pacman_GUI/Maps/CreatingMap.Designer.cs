@@ -1,4 +1,4 @@
-﻿namespace Cursovoi
+﻿namespace Course
 {
     partial class CreatingMap
     {

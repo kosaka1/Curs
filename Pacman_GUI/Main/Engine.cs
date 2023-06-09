@@ -1,34 +1,46 @@
 ﻿using System.Media;
 
 
-namespace Cursovoi
+namespace Course
 {
     internal class Engine // відповідає за ігровий процес
     {
         public bool IsPlaying = true;
         public bool IsPause = false;
+        public Pacman Pacman {get; private set;}
+        public Enemy[] Enemies { get; private set;}
         public GameResult GameResult;
         public (int x, int y) BonusPosition;
         private SoundPlayer soundPlayer = new SoundPlayer();
         private Map map;
-        private Pacman pacman;
-        private Enemy[] enemies;
         private bool isBonusLevel = false;
         private ConsoleKey key;
 
-        public Engine(Map map, Pacman pacman, Enemy[] enemies)
+        public Engine(Map map)
         {
             this.map = map;
             if (this.map.Name.ToLower().Contains("bonus"))
             {
                 isBonusLevel = true;
             }
-            this.pacman = pacman;
-            if (this.pacman.X == 0 && this.pacman.Y == 0)
+            Enemies = new Enemy[map.StartEnemiesPosition.Length];
+            Pacman = new Pacman(map.StartPacmanPosition.X, map.StartPacmanPosition.Y, map);
+
+            for (int i = 0; i < map.StartEnemiesPosition.Length; i++)
             {
-                IsPlaying = false;
+                switch (Settings.Difficulty)
+                {
+                    case 1:
+                        Enemies[i] = new Enemy(map.StartEnemiesPosition[i].X, map.StartEnemiesPosition[i].Y, map);
+                        break;
+                    case 2:
+                        Enemies[i] = new NaiveEnemy(map.StartEnemiesPosition[i].X, map.StartEnemiesPosition[i].Y, map);
+                        break;
+                    case 3:
+                        Enemies[i] = new SmartEnemy(map.StartEnemiesPosition[i].X, map.StartEnemiesPosition[i].Y, map);
+                        break;
+                }
             }
-            this.enemies = enemies;
             keyChanged += HandleKey;
             GameResult = GameResult.None;
         }
@@ -80,13 +92,13 @@ namespace Cursovoi
                     {
                         continue;
                     }
-                    foreach (Enemy enemy in enemies)
+                    foreach (Enemy enemy in Enemies)
                     {
-                        pacman.CheckPosition(enemy);
-                        enemy.Move(pacman.X, pacman.Y);
-                        pacman.CheckPosition(enemy);
+                        Pacman.CheckPosition(enemy);
+                        enemy.Move(Pacman.X, Pacman.Y);
+                        Pacman.CheckPosition(enemy);
                     }
-                    pacman.Move(key);
+                    Pacman.Move(key);
                     Thread.Sleep((int)(240 * Settings.GameSpeed));
                 }
             });
@@ -94,7 +106,7 @@ namespace Cursovoi
             {
                 while (IsPlaying)
                 {
-                    if (pacman.HealthPoints <= 0)
+                    if (Pacman.HealthPoints <= 0)
                     {
                         Lose(ref IsPlaying);
                     }

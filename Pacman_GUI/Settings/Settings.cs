@@ -1,5 +1,5 @@
 ﻿
-namespace Cursovoi
+namespace Course
 {
     internal class Settings // налаштування, задають швидкість гри, складність
     {

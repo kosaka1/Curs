@@ -1,5 +1,5 @@
 ﻿
-namespace Cursovoi
+namespace Course
 {
     internal class Shop // клас для здійснення покупок
     {

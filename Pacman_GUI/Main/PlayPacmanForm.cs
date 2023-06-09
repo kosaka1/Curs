@@ -1,8 +1,6 @@
-
-
 using System.ComponentModel;
 
-namespace Cursovoi
+namespace Course
 {
 
     public partial class PlayPacmanForm : Form
@@ -31,9 +29,6 @@ namespace Cursovoi
         static public Dictionary<Symbols, Bitmap> Textures;
         private Graphics graphics;
         private Map map;
-        private Point pacmanPosition;
-        private Point[] enemiesPosition;
-        private Symbols enemySymbol;
         private PictureBox pacman;
         private PictureBox[] enemies;
         private Panel Win;
@@ -55,8 +50,6 @@ namespace Cursovoi
         private Label healthPoints = new Label();
         private Label inventory = new Label();
         private Label controlsInfo = new Label();
-        private int pacmanHealth;
-        private List<Item> Items = new List<Item>();
         private (int x, int y) bonusPosition;
 
         public PlayPacmanForm()
@@ -90,15 +83,32 @@ namespace Cursovoi
         {
             MainMenu.Controls.Add(mapList);
             mapList.BringToFront();
+            CountOfMoney.Text = Pacman.Money.ToString();
 
-            pacmanPosition = new Point();
+            CreatePacman();
+            CreateEndGamePanels();
+            CreateSettingsPanel();
+            CreateEscapeButton();
+            CreateShopPanel();
+            CreateControlsPanel();
+            SetGameInfo();
+
+            map = new Map(MapNameLabel.Text);
+
+        }
+
+        private void CreatePacman()
+        {
             pacman = new PictureBox();
             pacman.SizeMode = PictureBoxSizeMode.Zoom;
             pacman.Size = new Size(sizeOfSides, sizeOfSides);
             pacman.Image = PacmanTexture;
             pacman.Visible = false;
             Controls.Add(pacman);
+        }
 
+        private void CreateEndGamePanels()
+        {
             Win = new Panel();
             Win.Dock = DockStyle.Fill;
             Win.BackgroundImage = WinScreen;
@@ -116,7 +126,10 @@ namespace Cursovoi
             Lose.Enabled = false;
             Lose.Click += HidePanel;
             Controls.Add(Lose);
+        }
 
+        private void SetGameInfo()
+        {
             pause.Visible = false;
             pause.ForeColor = Color.White;
             Controls.Add(pause);
@@ -129,16 +142,14 @@ namespace Cursovoi
             healthPoints.Font = new Font("MV Boli", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Controls.Add(healthPoints);
 
-            pacmanHealth = 0;
             inventory.ForeColor = Color.White;
             inventory.Text = "Inventory";
             inventory.Font = new Font("MV Boli", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             Controls.Add(inventory);
+        }
 
-            map = new Map(MapNameLabel.Text);
-
-            CountOfMoney.Text = Pacman.Money.ToString();
-
+        private void CreateSettingsPanel()
+        {
             settings.Dock = DockStyle.Fill;
             settings.Visible = false;
             settings.BackgroundImage = BackgroundTexture;
@@ -196,11 +207,17 @@ namespace Cursovoi
             difficulty.Location = new Point(settingsText.Right + 2, input.Location.Y + 30);
             difficulty.SelectedIndexChanged += SetDifficulty;
             settings.Controls.Add(difficulty);
+        }
 
+        private void CreateEscapeButton()
+        {
             escape.Text = "back";
             escape.Dock = DockStyle.Bottom;
             escape.Click += ReturnToMenu;
+        }
 
+        private void CreateShopPanel()
+        {
             shopPanel = new Panel();
             shopPanel.Dock = DockStyle.Fill;
             shopPanel.BackgroundImage = BackgroundTexture;
@@ -236,7 +253,10 @@ namespace Cursovoi
             bagSizeCost.Text = $"{new BagSize().Price}$";
             bagSizeCost.Location = new Point(bag.Left, bag.Bottom);
             shopPanel.Controls.Add(bagSizeCost);
+        }
 
+        private void CreateControlsPanel()
+        {
             controlsPanel.Dock = DockStyle.Fill;
             controlsPanel.BackgroundImage = BackgroundTexture;
             Controls.Add(controlsPanel);
@@ -268,46 +288,28 @@ namespace Cursovoi
             MainMenu.Enabled = false;
 
             map = new Map(MapNameLabel.Text);
-            Enemy[] enemies = new Enemy[map.StartEnemiesPosition.Length];
-            enemiesPosition = new Point[enemies.Length];
-            this.pacman.Visible = true;
-            Pacman pacman = new Pacman(map.StartPacmanPosition.X, map.StartPacmanPosition.Y, map);
 
-            for (int i = 0; i < map.StartEnemiesPosition.Length; i++)
-            {
-                switch (Settings.Difficulty)
-                {
-                    case 1:
-                        enemies[i] = new Enemy(map.StartEnemiesPosition[i].X, map.StartEnemiesPosition[i].Y, map);
-                        break;
-                    case 2:
-                        enemies[i] = new NaiveEnemy(map.StartEnemiesPosition[i].X, map.StartEnemiesPosition[i].Y, map);
-                        break;
-                    case 3:
-                        enemies[i] = new SmartEnemy(map.StartEnemiesPosition[i].X, map.StartEnemiesPosition[i].Y, map);
-                        break;
-                }
-            }
-            engine = new Engine(map, pacman, enemies);
+            engine = new Engine(map);
             BackColor = Color.Black;
             engine.Start();
             KeyDown += PlayPacmanForm_KeyDown;
 
-            this.enemies = new PictureBox[enemies.Length];
-            for (int i = 0; i < this.enemies.Length; i++)
+            pacman.Visible = true;
+            enemies = new PictureBox[engine.Enemies.Length];
+            for (int i = 0; i < enemies.Length; i++)
             {
-                this.enemies[i] = new PictureBox();
-                this.enemies[i].SizeMode = PictureBoxSizeMode.Zoom;
-                this.enemies[i].Size = new Size(sizeOfSides, sizeOfSides);
-                this.enemies[i].Image = EnemyTexture;
-                Controls.Add(this.enemies[i]);
+                enemies[i] = new PictureBox();
+                enemies[i].SizeMode = PictureBoxSizeMode.Zoom;
+                enemies[i].Size = new Size(sizeOfSides, sizeOfSides);
+                enemies[i].Image = EnemyTexture;
+                Controls.Add(enemies[i]);
             }
 
             timerForReplace.Enabled = true;
             score.Location = new Point(map.Width * sizeOfSides, 10);
             healthPoints.Text = "Health";
             healthPoints.Location = new Point(0, map.Height * sizeOfSides);
-            DrawHealth(pacman.HealthPoints, false);
+
 
             MoneyLabel.Location = new Point(0, healthPoints.Bottom);
             MoneyLabel.ForeColor = Color.White;
@@ -315,58 +317,24 @@ namespace Cursovoi
             CountOfMoney.Location = new Point(MoneyLabel.Right, healthPoints.Bottom);
             CountOfMoney.ForeColor = Color.White;
             Controls.Add(CountOfMoney);
-
-            Items = pacman.Inventory.Contents;
-            DrawInventoryItems(Items);
-            Task.Run(() =>
-            {
-                while (engine.IsPlaying)
-                {
-                    if (engine.IsPause)
-                    {
-                        continue;
-                    }
-
-                    pacmanPosition.X = pacman.X * sizeOfSides;
-                    pacmanPosition.Y = pacman.Y * sizeOfSides;
-                    pacmanHealth = pacman.HealthPoints;
-                    Items = pacman.Inventory.Contents;
-
-                    bonusPosition = engine.BonusPosition;
-
-                    for (int i = 0; i < enemies.Length; i++)
-                    {
-                        enemiesPosition[i].X = enemies[i].X * sizeOfSides;
-                        enemiesPosition[i].Y = enemies[i].Y * sizeOfSides;
-                    }
-                    if (enemies.Length > 0)
-                    {
-                        enemySymbol = enemies[0].Symbol;
-                    }
-
-                    Thread.Sleep(30);
-                }
-                Save("money", Pacman.Money);
-            });
         }
 
         private void Replace(object sender, EventArgs e)
         {
             score.Text = $"Score {Pacman.Score}";
             CountOfMoney.Text = Pacman.Money.ToString();
-            DrawHealth(pacmanHealth, true);
-            DrawInventoryItems(Items);
 
             if (engine.BonusPosition != bonusPosition)
             {
                 ReDrawCell(bonusPosition.x, bonusPosition.y);
+                bonusPosition = engine.BonusPosition;
             }
 
-            pacman.Location = pacmanPosition;
+            pacman.Location = new Point(engine.Pacman.X * sizeOfSides, engine.Pacman.Y * sizeOfSides);
             for (int i = 0; i < enemies.Length; i++)
             {
-                enemies[i].Image = Textures[enemySymbol];
-                enemies[i].Location = enemiesPosition[i];
+                enemies[i].Image = Textures[engine.Enemies[i].Symbol];
+                enemies[i].Location = new Point(engine.Enemies[i].X * sizeOfSides, engine.Enemies[i].Y * sizeOfSides);
             }
             if (!engine.IsPlaying)
             {
@@ -378,6 +346,7 @@ namespace Cursovoi
                 {
                     DrawLose();
                 }
+                Save("money", Pacman.Money);
             }
         }
 
@@ -416,6 +385,8 @@ namespace Cursovoi
         {
             Graphics g = e.Graphics;
             DrawMap(map, g);
+            DrawHealth(engine.Pacman.HealthPoints);
+            DrawInventoryItems(engine.Pacman.Inventory.Contents);
         }
 
         private void PlayPacmanForm_KeyDown(object sender, KeyEventArgs e)
@@ -443,12 +414,8 @@ namespace Cursovoi
             graphics.DrawImage(Textures[map.Level[x, y].Symbol], x * sizeOfSides, y * sizeOfSides, sizeOfSides, sizeOfSides);
         }
 
-        private void DrawHealth(int count, bool reDraw)
+        private void DrawHealth(int count)
         {
-            if (reDraw)
-            {
-                graphics.DrawImage(SpaceTexture, new Rectangle(healthPoints.Right + count * sizeOfSides, map.Height * sizeOfSides, sizeOfSides, sizeOfSides));
-            }
             for (int i = 0; i < count; i++)
             {
                 graphics.DrawImage(PacmanTexture, healthPoints.Right + i * sizeOfSides, map.Height * sizeOfSides, sizeOfSides, sizeOfSides);

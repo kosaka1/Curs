@@ -1,7 +1,7 @@
 ﻿
 
 
-namespace Cursovoi
+namespace Course
 {
     internal class MazeGenerator // генерує карту за алгоритмом
     {
@@ -12,12 +12,12 @@ namespace Cursovoi
         private int minY;
         private MapCreator creator;
 
-        public MazeGenerator(int maxX, int maxY, int x, int y, int width, int height, MapCreator mapCreator)
+        public MazeGenerator(int maxX, int maxY, int minX, int minY, int width, int height, MapCreator mapCreator)
         {
             this.maxX = maxX;
             this.maxY = maxY;
-            minX = x;
-            minY = y;
+            this.minX = minX;
+            this.minY = minY;
             creator = mapCreator;
             Grid = CreateGrid(width, height);
         }
@@ -39,7 +39,7 @@ namespace Cursovoi
                         }
                         else // залишаємо стіну справа та робимо прохід нагору
                         {
-                            if (!CanComeOut(dx, x, y - 1)) // якщо у зробленій пустоті немає проходу нагору, логічно це перевіряти але можуть бути коридори без проходу
+                            if (!CanComeOut(dx, x, y - 1)) // якщо у зробленій пустоті немає проходу нагору
                             {
                                 int randomX = random.Next(dx, x); // обираємо над якою клітинкою будемо робити прохід
                                 Grid[randomX, y - 1] = false;              // прибираємо стіну зверху
@@ -57,11 +57,8 @@ namespace Cursovoi
                     }
                     else   // робимо пустоту в першому ряду
                     {
-                        if (x != maxX - 1) 
-                        {
-                            Grid[x, y] = false;
-                            creator.ChangePosition(x, y, false);
-                        }
+                        Grid[x, y] = false;
+                        creator.ChangePosition(x, y, false);
                     }
                 }
             }
@@ -77,7 +74,6 @@ namespace Cursovoi
                 for (int x = minX; x < maxX; x++) // заповнення стінами
                 {
                     mazeGrid[x, y] = true;
-                    //creator.ChangePosition(x, y, true);
                 }
             }
             return mazeGrid;
@@ -85,10 +81,6 @@ namespace Cursovoi
 
         private bool CanComeOut(int start, int end, int row)
         {
-            /*if (start == end) //ця перевірка може зробити коридор без виходу
-            {
-                return true;
-            }*/
             for (int i = start; i < end; i++)
             {
                 if (!Grid[i, row])
